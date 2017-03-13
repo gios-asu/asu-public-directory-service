@@ -1,4 +1,5 @@
-<?php
+<?php namespace Gios_Asu\ASUPublicDirectoryService;
+
 // This is a static class for interacting with the ASU public directory
 class ASUDirectory {
   // to find out about a person given an asurite:
