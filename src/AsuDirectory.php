@@ -122,6 +122,64 @@ class ASUDirectory {
     return "";
   }
 
+  /**
+   * Return T/F whether a user is listed as a student in iSearch
+   *
+   * @param  Array   $info
+   * @return String
+   */
+  static public function isStudent( $info ) {
+    if ( isset( $info['response']['docs'][0]['affiliations'] ) ) {
+      foreach ( $info['response']['docs'][0]['affiliations'] as $affiliation ) {
+        if ( 'Student' == $affiliation ) {
+          return TRUE;
+        }
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * Return T/F whether a user is listed as faculty in iSearch
+   *
+   * @param  Array   $info
+   * @return String
+   */
+  static public function isFaculty( $info ) {
+    if ( isset( $info['response']['docs'][0]['affiliations'] ) ) {
+      foreach ( $info['response']['docs'][0]['affiliations'] as $affiliation ) {
+        if ( 'Employee' == $affiliation ) {
+          foreach ( $info['response']['docs'][0]['emplClasses'] as $employee_class ) {
+            if ( 'Faculty' == $employee_class ) {
+              return TRUE;
+            }
+          }
+        }
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * Return T/F whether a user is listed as staff in iSearch
+   *
+   * @param  Array   $info
+   * @return String
+   */
+  static public function isStaff( $info ) {
+    if ( isset( $info['response']['docs'][0]['affiliations'] ) ) {
+      foreach ( $info['response']['docs'][0]['affiliations'] as $affiliation ) {
+        if ( 'Employee' == $affiliation ) {
+          foreach ( $info['response']['docs'][0]['emplClasses'] as $employee_class ) {
+            if ( 'University Staff' == $employee_class ) {
+              return TRUE;
+            }
+          }
+        }
+      }
+    }
+    return FALSE;
+  }
 
   /**
    * Return T/F whether a user is listed in iSearch as majoring in a degree program from the School of Sustainability
