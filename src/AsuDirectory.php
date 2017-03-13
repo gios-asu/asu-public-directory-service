@@ -42,6 +42,35 @@ class ASUDirectory {
   }
 
   /**
+   * Get user's EID from iSearch array
+   *
+   * @param  Array   $info
+   * @return Integer
+   */
+  static public function getEid( $info ) {
+    if ( isset( $info['response']['docs'][0]['eid'] ) ) {
+      return intval( $info['response']['docs'][0]['eid'] );
+    }
+    return "";
+  }
+
+  /**
+   * Get user's ASURITE from iSearch array
+   *
+   * A bit redundant, since we currently only retrieve the iSearch info using the ASURITE as key,
+   * but alternate key options may be useful later, making this method useful.
+   *
+   * @param  Array   $info
+   * @return String
+   */
+  static public function getAsurite( $info ) {
+    if ( isset( $info['response']['docs'][0]['asuriteId'] ) ) {
+      return strval( $info['response']['docs'][0]['asuriteId'] );
+    }
+    return "";
+  }
+
+  /**
    * Get user's full, display name from iSearch array
    *
    * @param  Array $info
