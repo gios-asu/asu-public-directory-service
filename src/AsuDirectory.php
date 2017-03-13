@@ -182,6 +182,47 @@ class ASUDirectory {
   }
 
   /**
+   * Get user's ASU affiliation/status (student, faculty, staff) from iSearch array
+   *
+   * This is a somewhat personalised function written for Sustainability Connect's (sustainabilityconnect.asu.edu) needs.
+   *
+   * @param  Array   $info
+   * @return String
+   */
+  static public function getUserType( $info ) {
+    $student = FALSE;
+    $faculty = FALSE;
+    $staff = FALSE;
+    if ( isset( $info['response']['docs'][0]['affiliations'] ) ) {
+      foreach ( $info['response']['docs'][0]['affiliations'] as $affiliation ) {
+        if ( 'Student' == $affiliation ) {
+          $student = TRUE;
+        }
+        if ( 'Employee' == $affiliation ) {
+          foreach ( $info['response']['docs'][0]['emplClasses'] as $employee_class ) {
+            if ( 'Faculty' == $employee_class ) {
+              $faculty = TRUE;
+            } elseif ( 'University Staff' == $employee_class ) {
+              $staff = TRUE;
+            }
+          }
+        }
+      }
+    }
+    // in case, user has multiple classicifcations (staff enrolled as student)
+    // role precedence: student > faculty > staff
+    if ( $student ) {
+      return 'student';
+    } elseif ( $faculty ) {
+      return 'faculty';
+    } elseif ( $staff ) {
+      return 'staff';
+    } else {
+      return FALSE;
+    }
+  }
+
+  /**
    * Return T/F whether a user is listed in iSearch as majoring in a degree program from the School of Sustainability
    *
    * @param  Array   $info
