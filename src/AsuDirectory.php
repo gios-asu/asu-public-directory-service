@@ -26,13 +26,19 @@ class ASUDirectory {
    * @return Array
    */
   static public function get_directory_info_by_asurite($asurite) {
-    if($asurite == NULL || strlen($asurite) < 3 || strlen($asurite) > 12) { return NULL; }
-    $asurite = urlencode(strtolower($asurite));
-    $xml = file_get_contents("https://webapp4.asu.edu/directory/ws/search?asuriteId=".$asurite);
-    if(empty($xml)) return NULL; // could get nothing back from the server
-    $feed = new SimpleXMLElement($xml);
-    if(empty($feed)) return NULL; // could get an empty result set from the server
-    return $feed;
+    if ( $asurite == NULL || strlen( $asurite ) < 3 || strlen( $asurite ) > 12 ) {
+      return NULL;
+    }
+    $asurite = urlencode( $asurite );
+    $json = file_get_contents( "https://asudir-solr.asu.edu/asudir/directory/select?q=asuriteId:" . $asurite . "&wt=json" );
+    if ( empty( $json ) ) {
+      return NULL;
+    }
+    $info = json_decode ( $json, true );
+    if ( 0 == $info['response']['numFound'] ) {
+      return NULL;
+    }
+    return $info;
   }
 
   /**
