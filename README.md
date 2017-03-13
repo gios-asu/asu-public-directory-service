@@ -1,7 +1,7 @@
 ASU Public Directory Service
 =========================
 
-This is a helper library for interacting with the ASU iSearch service to access directory information on registered ASU network users, including students, faculty, and staff.
+This is a helper library for interacting with the ASU iSearch public directory service to retrieve information on registered ASU network users, including students, faculty, and staff.
 
 For instance, to display the public ASU iSearch profile for a user, you need their EID:
 
