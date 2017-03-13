@@ -100,27 +100,23 @@ class ASUDirectory {
    * @param  Array   $info
    * @return String
    */
-  static public function  has_SOS_plan_from_directory_info($xml) {
-    if(isset($xml->person) && isset($xml->person->plans)) {
-      foreach($xml->person->plans->plan as $plan) {
-        // print_r($plan->plan);
-        if(isset($plan) && is_array($plan)) {
-          // echo "more than one plan! ";
-          // print_r($plan);
-          // they have more than one plan:
-          foreach($plan as $sub_plan) {
-            if(isset($sub_plan->acadPlanDescr) && stristr($sub_plan->acadPlanDescr, "Sustainability")) {
-              return TRUE;
+  static public function has_SOS_plan_from_directory_info($info) {
+    if ( $info['response']['numFound'] > 0 ) {
+      if ( $info['response']['docs'][0]['programs'] ) {
+        foreach ( $info['response']['docs'][0]['programs'] as $program ) {
+          // look for SOS program
+          if ( 'School of Sustainability' == $program ) {
+            foreach ( $info['response']['docs'][0]['majors'] as $major ) {
+              // is student majoring in Sustainability
+              if ( 'Sustainability' == $major ) {
+                return TRUE;
+              }
             }
           }
-        } else if(isset($plan->acadPlanDescr) && stristr($plan->acadPlanDescr, "Sustainability")) {
-          return TRUE;
-        } else {
-          // echo "there is a plan but its not sustainability, its ".$plan->acadPlanDescr."\n";
         }
       }
     }
-    // echo "NO PLANS\n";
+
     return FALSE;
   }
 
