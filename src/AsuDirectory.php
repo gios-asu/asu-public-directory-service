@@ -47,9 +47,9 @@ class ASUDirectory {
    * @param  Array $info
    * @return String
    */
-  static public function  get_display_name_from_directory_info($xml) {
-    if(isset($xml->person) && isset($xml->person->displayName)) {
-      return strval($xml->person->displayName);
+  static public function get_display_name_from_directory_info($info) {
+    if ( isset( $info['response']['docs'][0]['displayName'] ) ) {
+      return strval( $info['response']['docs'][0]['displayName'] );
     }
     return "";
   }
@@ -60,9 +60,9 @@ class ASUDirectory {
    * @param  Array   $info
    * @return String
    */
-  static public function  get_last_name_from_directory_info($xml) {
-    if(isset($xml->person) && isset($xml->person->lastName)) {
-      return strval($xml->person->lastName);
+  static public function get_last_name_from_directory_info($info) {
+    if ( isset( $info['response']['docs'][0]['lastName'] ) ) {
+      return strval( $info['response']['docs'][0]['lastName'] );
     }
     return "";
   }
@@ -73,9 +73,9 @@ class ASUDirectory {
    * @param  Array   $info
    * @return String
    */
-  static public function  get_first_name_from_directory_info($xml) {
-    if(isset($xml->person) && isset($xml->person->firstName)) {
-      return strval($xml->person->firstName);
+  static public function get_first_name_from_directory_info($info) {
+    if ( isset( $info['response']['docs'][0]['firstName'] ) ) {
+      return strval( $info['response']['docs'][0]['firstName'] );
     }
     return "";
   }
@@ -86,9 +86,9 @@ class ASUDirectory {
    * @param  Array   $info
    * @return String
    */
-  static public function  get_email_from_directory_info($xml) {
-    if(isset($xml->person) && isset($xml->person->email)) {
-      return strval($xml->person->email);
+  static public function get_email_from_directory_info($info) {
+    if ( isset( $info['response']['docs'][0]['emailAddress'] ) ) {
+      return strval( $info['response']['docs'][0]['emailAddress'] );
     }
     return "";
   }
