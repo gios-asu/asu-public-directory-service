@@ -1,4 +1,4 @@
-<?php namespace Gios_Asu\ASUPublicDirectoryService;
+<?php namespace Gios_Asu\AsuPublicDirectoryService;
 
 /**
  *  AsuDirectory
@@ -17,7 +17,7 @@
  *
  *  @author Nathan D. Rollins
  */
-class ASUDirectory {
+class AsuDirectory {
 
   /**
    * Get user's iSearch record using their ASURITE id
