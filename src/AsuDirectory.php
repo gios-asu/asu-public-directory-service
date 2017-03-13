@@ -247,5 +247,4 @@ class ASUDirectory {
 
     return FALSE;
   }
-
 }
