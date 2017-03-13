@@ -1,13 +1,31 @@
 <?php namespace Gios_Asu\ASUPublicDirectoryService;
 
-// This is a static class for interacting with the ASU public directory
+/**
+ *  AsuDirectory
+ *
+ *  This is a static class for interacting with the ASU iSearch service.
+ *  To display an ASU iSearch profile, you need their EID (Employee ID?):
+ *  https://isearch.asu.edu/profile/{EID}
+ *
+ *  Profile data can be retrieved as XML and JSON:
+ *  to find out about a person given an asurite:
+ *  https://asudir-solr.asu.edu/asudir/directory/select?q=asuriteId:{ASURITE}&wt=json
+ *  https://asudir-solr.asu.edu/asudir/directory/select?q=asuriteId:{ASURITE}&wt=xml
+ *
+ *  Thus, in order to access a user's iSearch profile page when you have their ASURITE,
+ *  such as provided by the ASU CAS service, their EID must be retrieved using the XML or JSON service.
+ *
+ *  @author Nathan D. Rollins
+ */
 class ASUDirectory {
-  // to find out about a person given an asurite:
-  //   https://webapp4.asu.edu/directory/ws/search?asuriteId=xxxxxxx
-  // or we could in the future by first+last name:
-  //   https://webapp4.asu.edu/directory/ws/search?q=FIRST+LAST
 
- static public function get_directory_info_by_asurite($asurite) {
+  /**
+   * Get user's iSearch record using their ASURITE id
+   *
+   * @param String $asurite
+   * @return Array
+   */
+  static public function get_directory_info_by_asurite($asurite) {
     if($asurite == NULL || strlen($asurite) < 3 || strlen($asurite) > 12) { return NULL; }
     $asurite = urlencode(strtolower($asurite));
     $xml = file_get_contents("https://webapp4.asu.edu/directory/ws/search?asuriteId=".$asurite);
@@ -17,8 +35,11 @@ class ASUDirectory {
     return $feed;
   }
 
-  /** get_display_name_from_directory_info
-   * @return the displayname from the xml directory info or return empty string
+  /**
+   * Get user's full, display name from iSearch array
+   *
+   * @param  Array $info
+   * @return String
    */
   static public function  get_display_name_from_directory_info($xml) {
     if(isset($xml->person) && isset($xml->person->displayName)) {
@@ -27,8 +48,11 @@ class ASUDirectory {
     return "";
   }
 
-  /** get_last_name_from_directory_info
-   * @return the lastName from the xml directory info or return empty string
+  /**
+   * Get user's last name from iSearch array
+   *
+   * @param  Array   $info
+   * @return String
    */
   static public function  get_last_name_from_directory_info($xml) {
     if(isset($xml->person) && isset($xml->person->lastName)) {
@@ -37,8 +61,11 @@ class ASUDirectory {
     return "";
   }
 
-  /** get_first_name_from_directory_info
-   * @return the firstName from the xml directory info or return empty string
+  /**
+   * Get user's first name from iSearch array
+   *
+   * @param  Array   $info
+   * @return String
    */
   static public function  get_first_name_from_directory_info($xml) {
     if(isset($xml->person) && isset($xml->person->firstName)) {
@@ -47,8 +74,11 @@ class ASUDirectory {
     return "";
   }
 
-  /** get_email_from_directory_info
-   * @return the email from the xml directory info or return empty string
+  /**
+   * Get user's email address from iSearch array
+   *
+   * @param  Array   $info
+   * @return String
    */
   static public function  get_email_from_directory_info($xml) {
     if(isset($xml->person) && isset($xml->person->email)) {
@@ -58,45 +88,11 @@ class ASUDirectory {
   }
 
 
-  /**  has_SOS_plan_from_directory_info
-  The complexity of this function is because of how the structure changes for when there
-    are multiple plans:
-
-    eg: one plan
-        [plans] => SimpleXMLElement Object
-                (
-                    [plan] => SimpleXMLElement Object
-                        (
-                            [acadPlan] => LAEESBA
-                            [acadCareer] => UGRD
-                              ....
-                        )
-                )
-    eg: more than one plan
-      [plans] => SimpleXMLElement Object
-                (
-                    [plan] => Array
-                        (
-                            [0] => SimpleXMLElement Object
-                                (
-                                    [acadPlan] => LASESGSBS
-                                    [acadCareer] => UGRD
-                                     ....
-                                )
-                            [1] => SimpleXMLElement Object
-                                (
-                                    [acadPlan] => SUSUSTBS
-                                    [acadCareer] => UGRD
-                                    [acadCareerDescr] => Undergraduate
-                                    [acadPlanType] => MAJ
-                                    [acadProg] => UGSU
-                                    [acadPlanDescr] => Sustainability
-                                    [acadProgDescr] => School of Sustainability
-                                    [progStatus] => AC
-                                )
-                        )
-                )
-    @returns true if the person has an SOS plan, or false if not
+  /**
+   * Return T/F whether a user is listed in iSearch as majoring in a degree program from the School of Sustainability
+   *
+   * @param  Array   $info
+   * @return String
    */
   static public function  has_SOS_plan_from_directory_info($xml) {
     if(isset($xml->person) && isset($xml->person->plans)) {
