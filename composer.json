@@ -1,0 +1,23 @@
+{
+    "name": "gios-asu/asu-public-directory-service",
+    "description": "A helper library for interacting with the ASU iSearch user information service.",
+    "keywords": ["asu", "isearch", "directory"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nathan D. Rollins",
+            "email": "nathan.rollins@asu.edu"
+        }
+    ],
+    "type": "project",
+    "require": {
+		"php": ">=5.4"
+    },
+	"require-dev": {
+    },
+	"autoload": {
+        "psr-4": {
+            "Gios_Asu\\ASUPublicDirectoryService\\": "src/"
+        }
+    }
+}
