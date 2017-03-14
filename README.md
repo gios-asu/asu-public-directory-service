@@ -22,3 +22,7 @@ As this iSearch interface is provided by Apache Solr, other queries are also ava
 * https://asudir-solr.asu.edu/asudir/directory/select?q=lastName:{lastName}&wt=xml
 
 More information available on the [Solr Standard Query Parser](https://cwiki.apache.org/confluence/display/solr/The+Standard+Query+Parser)
+
+###iSearch API notes:
+
+1. Note that the XML and JSON responses from iSearch have a subtle structural difference: the XML child element `<doc>` is named 'docs' in the JSON response object.
