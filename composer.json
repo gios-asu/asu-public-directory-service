@@ -14,10 +14,11 @@
 		"php": ">=5.4"
     },
 	"require-dev": {
+        "phpunit/phpunit": "5.7.*"
     },
 	"autoload": {
         "psr-4": {
-            "Gios_Asu\\ASUPublicDirectoryService\\": "src/"
+            "Gios_Asu\\AsuPublicDirectoryService\\\\": "src/"
         }
     }
 }
