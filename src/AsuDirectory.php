@@ -230,7 +230,7 @@ class AsuDirectory {
    */
   static public function has_SOS_plan_from_directory_info($info) {
     if ( $info['response']['numFound'] > 0 ) {
-      if ( $info['response']['docs'][0]['programs'] ) {
+      if ( !empty( $info['response']['docs'][0]['programs'] ) ) {
         foreach ( $info['response']['docs'][0]['programs'] as $program ) {
           // look for SOS program
           if ( 'School of Sustainability' == $program ) {
