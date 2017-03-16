@@ -25,7 +25,7 @@ class AsuDirectory {
    * @param String $asurite
    * @return Array
    */
-  static public function get_directory_info_by_asurite($asurite) {
+  static public function getDirectoryInfoByAsurite($asurite) {
     if ( $asurite == NULL || strlen( $asurite ) < 3 || strlen( $asurite ) > 12 ) {
       return NULL;
     }
@@ -47,7 +47,7 @@ class AsuDirectory {
    * @param  Array   $info
    * @return Integer
    */
-  static public function get_eid_from_directory_info( $info ) {
+  static public function getEid( $info ) {
     if ( isset( $info['response']['docs'][0]['eid'] ) ) {
       return intval( $info['response']['docs'][0]['eid'] );
     }
@@ -63,7 +63,7 @@ class AsuDirectory {
    * @param  Array   $info
    * @return String
    */
-  static public function get_asurite_from_directory_info( $info ) {
+  static public function getAsurite( $info ) {
     if ( isset( $info['response']['docs'][0]['asuriteId'] ) ) {
       return strval( $info['response']['docs'][0]['asuriteId'] );
     }
@@ -76,7 +76,7 @@ class AsuDirectory {
    * @param  Array $info
    * @return String
    */
-  static public function get_display_name_from_directory_info($info) {
+  static public function getDisplayName($info) {
     if ( isset( $info['response']['docs'][0]['displayName'] ) ) {
       return strval( $info['response']['docs'][0]['displayName'] );
     }
@@ -89,7 +89,7 @@ class AsuDirectory {
    * @param  Array   $info
    * @return String
    */
-  static public function get_last_name_from_directory_info($info) {
+  static public function getLastName($info) {
     if ( isset( $info['response']['docs'][0]['lastName'] ) ) {
       return strval( $info['response']['docs'][0]['lastName'] );
     }
@@ -102,7 +102,7 @@ class AsuDirectory {
    * @param  Array   $info
    * @return String
    */
-  static public function get_first_name_from_directory_info($info) {
+  static public function getFirstName($info) {
     if ( isset( $info['response']['docs'][0]['firstName'] ) ) {
       return strval( $info['response']['docs'][0]['firstName'] );
     }
@@ -115,7 +115,7 @@ class AsuDirectory {
    * @param  Array   $info
    * @return String
    */
-  static public function get_email_from_directory_info($info) {
+  static public function getEmail($info) {
     if ( isset( $info['response']['docs'][0]['emailAddress'] ) ) {
       return strval( $info['response']['docs'][0]['emailAddress'] );
     }
@@ -163,6 +163,10 @@ class AsuDirectory {
   /**
    * Return T/F whether a user is listed as staff in iSearch
    *
+   * Specifically, this function searches for the 'Employee' affiliation AND 'University Staff' employee classification.
+   * Student workers and Graduate Assistants have the employee affiliation in addition to their Student affiliation,
+   * but they have a different employee classification.
+   *
    * @param  Array   $info
    * @return String
    */
@@ -182,9 +186,11 @@ class AsuDirectory {
   }
 
   /**
-   * Get user's ASU affiliation/status (student, faculty, staff) from iSearch array
+   * Get user's ASU primary affiliation/status (student, faculty, staff) from iSearch array
    *
    * This is a somewhat personalised function written for Sustainability Connect's (sustainabilityconnect.asu.edu) needs.
+   * Just in case a university staff user might also be classified as a student if they are enrolled for students,
+   * this function prioritises employee classification: Student > Faculty > Staff.
    *
    * @param  Array   $info
    * @return String
@@ -209,7 +215,7 @@ class AsuDirectory {
         }
       }
     }
-    // in case, user has multiple classicifcations (staff enrolled as student)
+    // in case, user has multiple classifications (staff enrolled as student)
     // role precedence: student > faculty > staff
     if ( $student ) {
       return 'student';
@@ -228,7 +234,7 @@ class AsuDirectory {
    * @param  Array   $info
    * @return String
    */
-  static public function has_SOS_plan_from_directory_info($info) {
+  static public function hasSosPlan( $info ) {
     if ( $info['response']['numFound'] > 0 ) {
       if ( !empty( $info['response']['docs'][0]['programs'] ) ) {
         foreach ( $info['response']['docs'][0]['programs'] as $program ) {
