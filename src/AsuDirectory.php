@@ -163,6 +163,10 @@ class AsuDirectory {
   /**
    * Return T/F whether a user is listed as staff in iSearch
    *
+   * Specifically, this function searches for the 'Employee' affiliation AND 'University Staff' employee classification.
+   * Student workers and Graduate Assistants have the employee affiliation in addition to their Student affiliation,
+   * but they have a different employee classification.
+   *
    * @param  Array   $info
    * @return String
    */
@@ -182,9 +186,11 @@ class AsuDirectory {
   }
 
   /**
-   * Get user's ASU affiliation/status (student, faculty, staff) from iSearch array
+   * Get user's ASU primary affiliation/status (student, faculty, staff) from iSearch array
    *
    * This is a somewhat personalised function written for Sustainability Connect's (sustainabilityconnect.asu.edu) needs.
+   * Just in case a university staff user might also be classified as a student if they are enrolled for students,
+   * this function prioritises employee classification: Student > Faculty > Staff.
    *
    * @param  Array   $info
    * @return String
@@ -209,7 +215,7 @@ class AsuDirectory {
         }
       }
     }
-    // in case, user has multiple classicifcations (staff enrolled as student)
+    // in case, user has multiple classifications (staff enrolled as student)
     // role precedence: student > faculty > staff
     if ( $student ) {
       return 'student';
