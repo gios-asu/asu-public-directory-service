@@ -1,8 +1,7 @@
 {
-    "name": "gios-asu/asu-public-directory-service",
+    "name": "asu-ke-web-services/asu-public-directory-service",
     "description": "A helper library for interacting with the ASU iSearch user information service.",
     "keywords": ["asu", "isearch", "directory"],
-    "license": "MIT",
     "authors": [
         {
             "name": "Nathan D. Rollins",
@@ -18,7 +17,7 @@
     },
 	"autoload": {
         "psr-4": {
-            "Gios_Asu\\AsuPublicDirectoryService\\\\": "src/"
+            "Asu_Research\\AsuPublicDirectoryService\\\\": "src/"
         }
     }
 }
