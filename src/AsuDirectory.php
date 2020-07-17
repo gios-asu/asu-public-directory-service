@@ -1,4 +1,4 @@
-<?php namespace Gios_Asu\AsuPublicDirectoryService;
+<?php namespace Asu_Research\AsuPublicDirectoryService;
 
 /**
  *  AsuDirectory

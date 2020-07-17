@@ -30,12 +30,12 @@ You can use Composer to install this package into your PHP project by adding the
 ```javascript
 "repositories": [
     {
-        "url": "https://github.com/gios-asu/asu-public-directory-service",
+        "url": "https://github.com/asu-ke-web-services/asu-public-directory-service",
         "type": "git"
     }
 ],
 "require": {
-    "gios-asu/asu-public-directory-service": "dev-master"
+    "asu-ke-web-services/asu-public-directory-service": "dev-master"
 },
 ```
 
@@ -44,8 +44,8 @@ You can use Composer to install this package into your PHP project by adding the
 Include the class and its namespace in your project:
 
 ```php
-use Gios_Asu\AsuPublicDirectoryService\AsuDirectory;
-require_once 'vendor/gios-asu/asu-public-directory-service/src/AsuDirectory.php';
+use Asu_Research\AsuPublicDirectoryService\AsuDirectory;
+require_once 'vendor/asu-ke-web-services/asu-public-directory-service/src/AsuDirectory.php';
 ```
 
 Then when you need to get a user's directory information, you must already have their ASURITE login name. To retrieve their directory record:
